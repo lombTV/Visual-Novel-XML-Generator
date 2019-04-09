@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<project name="Jobbold XML Generator" default="do-deploy" basedir="."  xmlns:fx="javafx:com.sun.javafx.tools.ant">
+	<project name="VisualNovel XML Generator" default="do-deploy" basedir="."  xmlns:fx="javafx:com.sun.javafx.tools.ant">
 	<target name="init-fx-tasks">
 		<path id="fxant">
 			<filelist>
@@ -22,7 +22,7 @@
 	
 		<mkdir dir="project" />
 		<copy todir="project">
-			<fileset dir="C:\Users\TV\eclipse-workspace\Jobbold XML Generator">
+			<fileset dir="C:\Users\TV\eclipse-workspace\VisualNovel XML Generator">
 				<include name="src/**" />
 			</fileset>
 		</copy>
@@ -82,12 +82,12 @@
 	
 	
 		<fx:resources id="appRes">
-			<fx:fileset dir="dist" includes="Jobbold XML Generator.jar"/>
+			<fx:fileset dir="dist" includes="VisualNovel XML Generator.jar"/>
 			<fx:fileset dir="dist" includes="libs/*"/>
 		</fx:resources>
 	
 		<fx:application id="fxApplication"
-			name="JobboldXML"
+			name="VisualNovelXMLGenerator"
 			mainClass="Controllers.Main"
 		/>
 	
@@ -95,7 +95,7 @@
 	
 	
 	
-		<fx:jar destfile="dist/Jobbold XML Generator.jar">
+		<fx:jar destfile="dist/VisualNovel XML Generator.jar">
 			<fx:application refid="fxApplication"/>
 			<fileset dir="build/classes">
 			</fileset>
@@ -103,8 +103,8 @@
 	
 			<manifest>
 				<attribute name="Implementation-Vendor" value="TV"/>
-				<attribute name="Implementation-Title" value="JobboldXML"/>
-				<attribute name="Implementation-Version" value="1.0.0"/>
+				<attribute name="Implementation-Title" value="VisualNovelXMLGenerator"/>
+				<attribute name="Implementation-Version" value="0.1"/>
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>
 		</fx:jar>

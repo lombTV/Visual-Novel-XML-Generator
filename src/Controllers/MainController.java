@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import DataStructures.StringBag;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +38,7 @@ public class MainController implements Initializable {
 	@FXML
 	private Button changeViewButton;
 	@FXML
-	private MenuItem menuSave;
+	private MenuItem menuSave, menuClose;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -45,6 +46,11 @@ public class MainController implements Initializable {
 		theBag = Main.getBag();
 		System.out.println("Controller Initialized...");
 		menuSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+	}
+	
+	public void closeProgram(ActionEvent e) {
+		Platform.exit();
+		System.exit(0);
 	}
 	
 	public void getData(ActionEvent e) {
