@@ -16,7 +16,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -36,7 +39,7 @@ public class MainController implements Initializable {
 	@FXML
 	private Button changeViewButton;
 	@FXML
-	private MenuItem menuSave, menuClose;
+	private MenuItem menuSave, menuClose, menuAbout;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -48,6 +51,11 @@ public class MainController implements Initializable {
 	public void closeProgram(ActionEvent e) {
 		Platform.exit();
 		System.exit(0);
+	}
+
+	public void showAbout(ActionEvent e) {
+		Alert alert = new Alert(AlertType.INFORMATION, "Credits:\nProgram written by Matthew Lombardo. \nSyntax designed by Eleo Espinosa.", ButtonType.OK);
+		alert.showAndWait();
 	}
 
 	public void getData(ActionEvent e) {
