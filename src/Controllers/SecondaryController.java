@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import DataStructures.StringBag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +17,10 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class SecondaryController implements Initializable {
-	private StringBag theBag;
 	private String active;
 	private StringBuilder inputText;
 	private String[] parameters;
-	
+
 	@FXML
 	private TextArea outputArea;
 	@FXML
@@ -30,12 +28,11 @@ public class SecondaryController implements Initializable {
 	@FXML
 	private Button changeViewButton, addTagButton;
 	@FXML
-	private RadioButton radioCharacter, radioMood, radioAnimation, radioBackground, radioEffect, 
+	private RadioButton radioCharacter, radioMood, radioAnimation, radioBackground, radioEffect,
 	radioMusic, radioDisplay, radioOptions, radioVoid, radioEnd;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		theBag = Main.getBag();
 		System.out.println("SecondaryController initalized...");
 		radioCharacter.setOnAction(e -> setActive("character"));
 		radioMood.setOnAction(e -> setActive("mood"));
@@ -48,10 +45,10 @@ public class SecondaryController implements Initializable {
 		radioVoid.setOnAction(e -> setActive("void"));
 		radioEnd.setOnAction(e -> setActive("end"));
 	}
-	
+
 	private void setActive(String i) {
 		active = i;
-		
+
 		switch(i) {
 		case "character": outputArea.setPromptText("Parameters: CharaNumber, CharaName"); break;
 		case "mood": outputArea.setPromptText("Parameters: MoodNumber, MoodName"); break;
@@ -67,14 +64,7 @@ public class SecondaryController implements Initializable {
 		}
 	}
 
-	public  void showData(ActionEvent e) {
-		System.out.println("Show Data Button is clicked!");
-		int j = theBag.getNElems();
-		for (int i = 0; i < j; i++) {
-			outputArea.appendText(theBag.remove() + "\n");
-		}
-	}
-	
+
 	public void addTag(ActionEvent e) {
 		inputText = new StringBuilder();
 		parameters = outputArea.getText().split(", ");
@@ -96,8 +86,8 @@ public class SecondaryController implements Initializable {
 		MainController.oldInput = inputText.toString();
 		changeView(e);
 	}
-	
-	
+
+
 	private String addEnd() {
 		// NO PARAMETERS
 		StringBuilder tag = new StringBuilder();
@@ -110,7 +100,7 @@ public class SecondaryController implements Initializable {
 		StringBuilder tag = new StringBuilder();
 		tag.append("VOID:VOID");
 		return tag.toString();
-		
+
 	}
 
 	private String addOptions() {
@@ -132,7 +122,7 @@ public class SecondaryController implements Initializable {
 		}
 		tag.append("]");
 		return tag.toString();
-		
+
 	}
 
 	private String addDisplay() {
@@ -140,7 +130,7 @@ public class SecondaryController implements Initializable {
 		StringBuilder tag = new StringBuilder();
 		tag.append("|image:" + parameters[0]);
 		return tag.toString();
-		
+
 	}
 
 	private String addMusic() {
@@ -148,7 +138,7 @@ public class SecondaryController implements Initializable {
 		StringBuilder tag = new StringBuilder();
 		tag.append("|music:" + parameters[0]);
 		return tag.toString();
-		
+
 	}
 
 	private String addEffect() {
@@ -156,7 +146,7 @@ public class SecondaryController implements Initializable {
 		StringBuilder tag = new StringBuilder();
 		tag.append("|effect:" + parameters[0]);
 		return tag.toString();
-		
+
 	}
 
 	private String addBackground() {
@@ -164,7 +154,7 @@ public class SecondaryController implements Initializable {
 		StringBuilder tag = new StringBuilder();
 		tag.append("|background:" + parameters[0]);
 		return tag.toString();
-		
+
 	}
 
 	private String addAnimation() {
@@ -179,7 +169,7 @@ public class SecondaryController implements Initializable {
 			tag.append(" " + parameters[2]);
 		}
 		return tag.toString();
-		
+
 	}
 
 	private String addMood() {
@@ -191,7 +181,7 @@ public class SecondaryController implements Initializable {
 		}
 		tag.append(":" + parameters[1]);
 		return tag.toString();
-		
+
 	}
 
 	private String addCharacter() {
@@ -203,7 +193,7 @@ public class SecondaryController implements Initializable {
 		}
 		tag.append(":" + parameters[1]);
 		return tag.toString();
-		
+
 	}
 
 	public void changeView(ActionEvent e) {

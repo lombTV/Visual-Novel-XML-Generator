@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import DataStructures.StringBag;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,9 +27,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainController implements Initializable {
-	private StringBag theBag;
 	static String oldInput;
-	
+
 	@FXML
 	private TextArea inputField;
 	@FXML
@@ -39,27 +37,24 @@ public class MainController implements Initializable {
 	private Button changeViewButton;
 	@FXML
 	private MenuItem menuSave, menuClose;
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		inputField.setText(oldInput);
-		theBag = Main.getBag();
 		System.out.println("Controller Initialized...");
 		menuSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 	}
-	
+
 	public void closeProgram(ActionEvent e) {
 		Platform.exit();
 		System.exit(0);
 	}
-	
+
 	public void getData(ActionEvent e) {
 		System.out.println("Get Data button clicked.");
-		theBag = Main.getBag();
-		theBag.insert(inputField.getText());
 		inputField.clear();
 	}
-	
+
 	public void saveXML(ActionEvent e) {
 		// Get String
 		String input = inputField.getText();
@@ -74,8 +69,8 @@ public class MainController implements Initializable {
 		XMLBuilder.append("		<position x=\"310\" y=\"153\"></position>\n");
 		XMLBuilder.append("		<colorID>0</colorID>\n");
 		XMLBuilder.append("	</node>\n");
-		
-		
+
+
 		// Pick save location
 
         FileChooser fileChooser = new FileChooser();
@@ -91,7 +86,7 @@ public class MainController implements Initializable {
             saveTextToFile(XMLBuilder.toString(), file);
         }
 	}
-	
+
 	private void saveTextToFile(String content, File file) {
         try {
             PrintWriter writer;
@@ -102,7 +97,7 @@ public class MainController implements Initializable {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-	
+
 	public void changeView(ActionEvent e) {
 		oldInput = inputField.getText();
 		try {
