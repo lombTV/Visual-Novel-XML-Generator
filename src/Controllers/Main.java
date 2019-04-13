@@ -14,6 +14,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			MainController.titleName = "";
 			System.out.println("Opening mainFXML.fxml...");
 			Parent root = FXMLLoader.load(getClass().getResource("/FXML/MainFXML.fxml"));
 			Scene scene = new Scene(root);

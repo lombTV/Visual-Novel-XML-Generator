@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,7 +24,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -31,6 +32,7 @@ import javafx.stage.Stage;
 
 public class MainController implements Initializable {
 	static String oldInput;
+	static String titleName;
 
 	@FXML
 	private TextArea inputField;
@@ -41,11 +43,13 @@ public class MainController implements Initializable {
 	@FXML
 	private MenuItem menuSave, menuClose, menuAbout;
 
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		inputField.setText(oldInput);
 		System.out.println("Controller Initialized...");
 		menuSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+		menuClose.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
 	}
 
 	public void closeProgram(ActionEvent e) {
@@ -54,7 +58,7 @@ public class MainController implements Initializable {
 	}
 
 	public void showAbout(ActionEvent e) {
-		Alert alert = new Alert(AlertType.INFORMATION, "Credits:\nProgram written by Matthew Lombardo. \nSyntax designed by Eleo Espinosa.", ButtonType.OK);
+		Alert alert = new Alert(AlertType.INFORMATION, "Credits:\nProgram written by Matthew Lombardo. \nXML Syntax designed by Eleo Espinosa.", ButtonType.OK);
 		alert.showAndWait();
 	}
 
@@ -65,15 +69,26 @@ public class MainController implements Initializable {
 
 	public void saveXML(ActionEvent e) {
 		// Get String
-		String input = inputField.getText();
-		input = input.replace("\n","\\n\n");
+		StringBuilder input = new StringBuilder();
+		input.append(inputField.getText());
+
+		if (titleName != "") {
+			Pattern p = Pattern.compile(".+?(?=\\n)");
+			Matcher m = p.matcher(input);
+			input = new StringBuilder(m.replaceAll(""));
+
+			p = Pattern.compile("\\|endTitle(.*)");
+			m = p.matcher(input);
+			input = new StringBuilder(m.replaceAll(""));
+		}
+
 		System.out.println(input);
 		// Parse it to XML
 		StringBuilder XMLBuilder = new StringBuilder();
 		XMLBuilder.append("	<node>\n");
-		XMLBuilder.append("		<title></title>\n");
+		XMLBuilder.append("		<title>" + titleName + "</title>\n");
 		XMLBuilder.append("		<tags></tags>\n");
-		XMLBuilder.append("		<body id=''>" + input + "\\n</body>\n");
+		XMLBuilder.append("		<body id=''>" + input.toString() + "\\n</body>\n");
 		XMLBuilder.append("		<position x=\"310\" y=\"153\"></position>\n");
 		XMLBuilder.append("		<colorID>0</colorID>\n");
 		XMLBuilder.append("	</node>\n");

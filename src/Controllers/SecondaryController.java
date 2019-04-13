@@ -29,7 +29,7 @@ public class SecondaryController implements Initializable {
 	private Button changeViewButton, addTagButton;
 	@FXML
 	private RadioButton radioCharacter, radioMood, radioAnimation, radioBackground, radioEffect,
-	radioMusic, radioDisplay, radioOptions, radioVoid, radioEnd;
+	radioMusic, radioDisplay, radioOptions, radioVoid, radioEnd, radioTitle;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -44,6 +44,7 @@ public class SecondaryController implements Initializable {
 		radioOptions.setOnAction(e -> setActive("options"));
 		radioVoid.setOnAction(e -> setActive("void"));
 		radioEnd.setOnAction(e -> setActive("end"));
+		radioTitle.setOnAction(e -> setActive("title"));
 	}
 
 	private void setActive(String i) {
@@ -61,6 +62,7 @@ public class SecondaryController implements Initializable {
 		case "options": outputArea.setPromptText("Parameters: OptionsNumber, Option1, Option1Tag, Option2, Option2Tag, Option3, Option3Tag, Option4, Option4Tag"); break;
 		case "void": outputArea.setPromptText("Parameters: None."); break;
 		case "end": outputArea.setPromptText("Parameters: None."); break;
+		case "title": outputArea.setPromptText("Parameters: TitleName."); break;
 		}
 	}
 
@@ -71,22 +73,32 @@ public class SecondaryController implements Initializable {
 		// Get InputArea Text
 		inputText.append(MainController.oldInput);
 		switch(active) {
-		case "character": inputText.append(addCharacter()); break;
-		case "mood": inputText.append(addMood()); break;
-		case "animation": inputText.append(addAnimation()); break;
-		case "background": inputText.append(addBackground()); break;
-		case "effect": inputText.append(addEffect()); break;
-		case "music": inputText.append(addMusic()); break;
-		case "display": inputText.append(addDisplay()); break;
-		case "options": inputText.append(addOptions()); break;
-		case "void": inputText.append(addVoid()); break;
-		case "end": inputText.append(addEnd()); break;
+			case "character": inputText.append(addCharacter()); break;
+			case "mood": inputText.append(addMood()); break;
+			case "animation": inputText.append(addAnimation()); break;
+			case "background": inputText.append(addBackground()); break;
+			case "effect": inputText.append(addEffect()); break;
+			case "music": inputText.append(addMusic()); break;
+			case "display": inputText.append(addDisplay()); break;
+			case "options": inputText.append(addOptions()); break;
+			case "void": inputText.append(addVoid()); break;
+			case "end": inputText.append(addEnd()); break;
+			case "title": inputText.append(addTitle()); break;
 		}
 		// Append to InputArea
 		MainController.oldInput = inputText.toString();
 		changeView(e);
 	}
 
+
+	private String addTitle() {
+		// One Parameter: DisplayName
+		inputText.insert(0,  "|title: " + parameters[0] + "\n");
+		MainController.titleName = parameters[0];
+		StringBuilder tag = new StringBuilder();
+		tag.append("|endTitle:" + parameters[0]);
+		return tag.toString();
+	}
 
 	private String addEnd() {
 		// NO PARAMETERS

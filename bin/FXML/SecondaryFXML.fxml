@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SecondaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SecondaryController">
    <children>
       <TextArea fx:id="outputArea" layoutX="29.0" layoutY="313.0" prefHeight="70.0" prefWidth="532.0" promptText="Parameter (Separate by Comma)" />
       <Button fx:id="addTagButton" layoutX="195.0" layoutY="393.0" mnemonicParsing="false" onAction="#addTag" text="Add!" />
@@ -28,6 +28,11 @@
             <RadioButton fx:id="radioOptions" mnemonicParsing="false" text="Options" toggleGroup="$Tag" />
             <RadioButton fx:id="radioVoid" mnemonicParsing="false" text="Void      " toggleGroup="$Tag" />
             <RadioButton fx:id="radioEnd" mnemonicParsing="false" text="End" toggleGroup="$Tag" />
+            <RadioButton fx:id="radioTitle" mnemonicParsing="false" text="Title">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Tag1" />
+               </toggleGroup>
+            </RadioButton>
          </children>
          <opaqueInsets>
             <Insets />
