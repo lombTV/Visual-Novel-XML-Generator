@@ -26,5 +26,16 @@
         </menus>
       </MenuBar>
       <TextArea fx:id="inputField" layoutX="7.0" layoutY="32.0" prefHeight="363.0" prefWidth="578.0" promptText="Enter Text Here..." />
+      <StyleClassedTextArea xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fxmisc.richtext.api.FxmlController"
+    editable="true" wrapText="true" autoScrollOnDragDesired="true"
+    onInsideSelectionMousePressReleased="#testWithMouseEvent" onOutsideSelectionMousePressed="#testWithOutMouseEvent"
+    onNewSelectionDragFinished="#testWithMouseEvent" onSelectionDropped="#testWithOutMouseEvent"
+    contextMenuXOffset="12.0" contextMenuYOffset="34.0" >
+    <contextMenu>
+        <ContextMenu>
+            <items><MenuItem text="Test Item" /></items>
+        </ContextMenu>
+    </contextMenu>
+</StyleClassedTextArea>
    </children>
 </AnchorPane>

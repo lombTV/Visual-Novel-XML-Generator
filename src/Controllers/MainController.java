@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.fxmisc.richtext.StyleClassedTextArea;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,19 +36,21 @@ public class MainController implements Initializable {
 	static String oldInput;
 	static String titleName;
 
-	@FXML
-	private TextArea inputField;
+//	@FXML
+//	private TextArea inputField;
 	@FXML
 	private Button getDataButton;
 	@FXML
 	private Button changeViewButton;
 	@FXML
 	private MenuItem menuSave, menuClose, menuAbout;
+	@FXML
+	private StyleClassedTextArea richTextFX;
 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		inputField.setText(oldInput);
+		richTextFX.replaceText(oldInput);
 		System.out.println("Controller Initialized...");
 		menuSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		menuClose.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
@@ -64,23 +68,44 @@ public class MainController implements Initializable {
 
 	public void getData(ActionEvent e) {
 		System.out.println("Get Data button clicked.");
-		inputField.clear();
+		richTextFX.clear();
 	}
 
 	public void saveXML(ActionEvent e) {
 		// Get String
 		StringBuilder input = new StringBuilder();
-		input.append(inputField.getText());
+		input.append(richTextFX.getText());
+		System.out.println("Rich Text: " + richTextFX.getText());
+
 
 		if (titleName != "") {
-			Pattern p = Pattern.compile(".+?(?=\\n)");
-			Matcher m = p.matcher(input);
-			input = new StringBuilder(m.replaceAll(""));
+			Pattern p;
+			Matcher m;
 
 			p = Pattern.compile("\\|endTitle(.*)");
 			m = p.matcher(input);
 			input = new StringBuilder(m.replaceAll(""));
+
+			String[] lines = input.toString().split("\\n");
+			input = new StringBuilder();
+			for (int i = 0; i < lines.length; i++) {
+				if (i > 0) {
+					input.append(lines[i] + "\\n\n");
+				}
+			}
+		} else {
+
+			String[] lines = input.toString().split("\\n");
+			input = new StringBuilder();
+			for (int i = 0; i < lines.length; i++) {
+				if (i >= 0) {
+					input.append(lines[i] + "\\n\n");
+				}
+			}
 		}
+
+		// Add new line symbol
+
 
 		System.out.println(input);
 		// Parse it to XML
@@ -88,7 +113,7 @@ public class MainController implements Initializable {
 		XMLBuilder.append("	<node>\n");
 		XMLBuilder.append("		<title>" + titleName + "</title>\n");
 		XMLBuilder.append("		<tags></tags>\n");
-		XMLBuilder.append("		<body id=''>" + input.toString() + "\\n</body>\n");
+		XMLBuilder.append("		<body id=''>" + input.toString() + "</body>\n");
 		XMLBuilder.append("		<position x=\"310\" y=\"153\"></position>\n");
 		XMLBuilder.append("		<colorID>0</colorID>\n");
 		XMLBuilder.append("	</node>\n");
@@ -122,7 +147,7 @@ public class MainController implements Initializable {
     }
 
 	public void changeView(ActionEvent e) {
-		oldInput = inputField.getText();
+		oldInput = richTextFX.getText();
 		try {
 			/* Loads the secondary FXML Scene */
 			System.out.println("Opening SecondaryFXML.fxml...");

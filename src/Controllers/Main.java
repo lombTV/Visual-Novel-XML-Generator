@@ -1,5 +1,7 @@
 package Controllers;
 
+import org.fxmisc.richtext.StyleClassedTextArea;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -15,6 +17,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			MainController.titleName = "";
+			MainController.oldInput = "";
 			System.out.println("Opening mainFXML.fxml...");
 			Parent root = FXMLLoader.load(getClass().getResource("/FXML/MainFXML.fxml"));
 			Scene scene = new Scene(root);
