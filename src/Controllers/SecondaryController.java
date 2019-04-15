@@ -68,32 +68,61 @@ public class SecondaryController implements Initializable {
 
 
 	public void addTag(ActionEvent e) {
+		StringBuilder finalText = new StringBuilder();
 		inputText = new StringBuilder();
 		parameters = outputArea.getText().split(", ");
 		// Get InputArea Text
 		inputText.append(MainController.oldInput);
-		switch(active) {
-			case "character": inputText.append(addCharacter()); break;
-			case "mood": inputText.append(addMood()); break;
-			case "animation": inputText.append(addAnimation()); break;
-			case "background": inputText.append(addBackground()); break;
-			case "effect": inputText.append(addEffect()); break;
-			case "music": inputText.append(addMusic()); break;
-			case "display": inputText.append(addDisplay()); break;
-			case "options": inputText.append(addOptions()); break;
-			case "void": inputText.append(addVoid()); break;
-			case "end": inputText.append(addEnd()); break;
-			case "title": inputText.append(addTitle()); break;
+		String[] lines = inputText.toString().split("\\n");
+		// For each line of inputText...
+		for (int i = 0; i < lines.length; i++) {
+			finalText.append(lines[i]);
+			if (i == MainController.caretValue) {
+				switch(active) {
+					case "character": finalText.append(addCharacter()); break;
+					case "mood": finalText.append(addMood()); break;
+					case "animation": finalText.append(addAnimation()); break;
+					case "background": finalText.append(addBackground()); break;
+					case "effect": finalText.append(addEffect()); break;
+					case "music": finalText.append(addMusic()); break;
+					case "display": finalText.append(addDisplay()); break;
+					case "options": finalText.append(addOptions()); break;
+					case "void": finalText.append(addVoid()); break;
+					case "end": finalText.append(addEnd()); break;
+					case "title": finalText.append(addTitle(finalText)); break;
+				}
+			}
+			finalText.append("\n");
+
 		}
+
+		if (MainController.caretValue == lines.length) {
+			switch(active) {
+				case "character": finalText.append(addCharacter()); break;
+				case "mood": finalText.append(addMood()); break;
+				case "animation": finalText.append(addAnimation()); break;
+				case "background": finalText.append(addBackground()); break;
+				case "effect": finalText.append(addEffect()); break;
+				case "music": finalText.append(addMusic()); break;
+				case "display": finalText.append(addDisplay()); break;
+				case "options": finalText.append(addOptions()); break;
+				case "void": finalText.append(addVoid()); break;
+				case "end": finalText.append(addEnd()); break;
+				case "title": finalText.append(addTitle(finalText)); break;
+			}
+		}
+
+		//	 Append the current line to finalText.
+		//	 If the current line == the caret's paragraph value, go through the switch
 		// Append to InputArea
-		MainController.oldInput = inputText.toString();
+		MainController.oldInput = finalText.toString();
 		changeView(e);
 	}
 
 
-	private String addTitle() {
+	private String addTitle(StringBuilder finalText) {
 		// One Parameter: DisplayName
-		inputText.insert(0,  "|title: " + parameters[0] + "\n");
+		finalText.insert(0,  "|title: " + parameters[0] + "\n");
 		MainController.titleName = parameters[0];
 		StringBuilder tag = new StringBuilder();
 		tag.append("|endTitle:" + parameters[0]);

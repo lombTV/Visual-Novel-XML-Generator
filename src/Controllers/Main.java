@@ -17,6 +17,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			MainController.titleName = "";
+			MainController.caretValue = 0;
 			MainController.oldInput = "";
 			System.out.println("Opening mainFXML.fxml...");
 			Parent root = FXMLLoader.load(getClass().getResource("/FXML/MainFXML.fxml"));

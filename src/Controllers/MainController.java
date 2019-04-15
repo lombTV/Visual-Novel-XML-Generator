@@ -35,6 +35,7 @@ import javafx.stage.Stage;
 public class MainController implements Initializable {
 	static String oldInput;
 	static String titleName;
+	static int caretValue;
 
 //	@FXML
 //	private TextArea inputField;
@@ -150,6 +151,7 @@ public class MainController implements Initializable {
 		oldInput = richTextFX.getText();
 		try {
 			/* Loads the secondary FXML Scene */
+			caretValue = richTextFX.getCurrentParagraph();
 			System.out.println("Opening SecondaryFXML.fxml...");
 			Parent root = FXMLLoader.load(getClass().getResource("/FXML/SecondaryFXML.fxml"));
 			System.out.println("SecondaryFXML.fxml has loaded successfully.");
