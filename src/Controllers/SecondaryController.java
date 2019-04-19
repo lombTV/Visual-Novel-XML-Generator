@@ -17,8 +17,17 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class SecondaryController implements Initializable {
+	/**
+	 * Stores the current choice found by clicking on a Radio Button.
+	 */
 	private String active;
+	/**
+	 * String Buiilder that stores the text that will be given back to the inputField in the Main Controller.
+	 */
 	private StringBuilder inputText;
+	/**
+	 * Array of strings that stores all the given parameters of the generated tag.
+	 */
 	private String[] parameters;
 
 	@FXML
@@ -31,6 +40,12 @@ public class SecondaryController implements Initializable {
 	private RadioButton radioCharacter, radioMood, radioAnimation, radioBackground, radioEffect,
 	radioMusic, radioDisplay, radioOptions, radioVoid, radioEnd, radioTitle, radioGoto, radioExtra;
 
+	/**
+	 * <p>This method is run as soon as SecondaryController is loaded by the MainController class.
+	 * </p>
+	 * @param location Used by the Controller.
+	 * @param resources Used by the Controller.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("SecondaryController initalized...");
@@ -49,6 +64,11 @@ public class SecondaryController implements Initializable {
 		radioExtra.setOnAction(e -> setActive("extra"));
 	}
 
+	/**
+	 * <p>Sets the "Parameters" text from the outputArea depending on which Radio Button is selected.
+	 * </p>
+	 * @param i The current parameter based on the chosen Radio Button..
+	 */
 	private void setActive(String i) {
 		active = i;
 
@@ -71,7 +91,11 @@ public class SecondaryController implements Initializable {
 		}
 	}
 
-
+	/**
+	 * <p>Run when the "Add Tag" button is clicked. Adds the chosen tag to the current line of the inputField, then goes back to the MainController.
+	 * </p>
+	 * @param e Used by the Controller.
+	 */
 	public void addTag(ActionEvent e) {
 		StringBuilder finalText = new StringBuilder();
 		inputText = new StringBuilder();
@@ -135,21 +159,31 @@ public class SecondaryController implements Initializable {
 		changeView(e);
 	}
 
-
+	/**
+	 * <p>Adds the Extra tag.
+	 * </p>
+	 */
 	private String addExtra() {
 		// One Parameter: ExtraName
 		StringBuilder tag = new StringBuilder();
 		tag.append("|extra:" + parameters[0]);
 		return tag.toString();
 	}
-
+	/**
+	 * <p>Adds the Goto tag.
+	 * </p>
+	 */
 	private String addGoto() {
 		// One Parameter: DisplayName
 		StringBuilder tag = new StringBuilder();
 		tag.append("|GoTo:" + parameters[0]);
 		return tag.toString();
 	}
-
+	/**
+	 * <p>Adds the Title tag.
+	 * </p>
+	 * @param finalText Unused String Builder. TODO remove.
+	 */
 	private String addTitle(StringBuilder finalText) {
 		// One Parameter: DisplayName
 		MainController.titleName = parameters[0];
@@ -157,14 +191,20 @@ public class SecondaryController implements Initializable {
 		tag.append("|title:" + parameters[0]);
 		return tag.toString();
 	}
-
+	/**
+	 * <p>Adds the End tag.
+	 * </p>
+	 */
 	private String addEnd() {
 		// NO PARAMETERS
 		StringBuilder tag = new StringBuilder();
 		tag.append("|End");
 		return tag.toString();
 	}
-
+	/**
+	 * <p>Adds the Void tag.
+	 * </p>
+	 */
 	private String addVoid() {
 		// NO PARAMETERS
 		StringBuilder tag = new StringBuilder();
@@ -172,7 +212,10 @@ public class SecondaryController implements Initializable {
 		return tag.toString();
 
 	}
-
+	/**
+	 * <p>Adds the Options tag.
+	 * </p>
+	 */
 	private String addOptions() {
 		StringBuilder tag = new StringBuilder();
 		int OptionsNumber = Integer.parseInt(parameters[0]);
@@ -194,7 +237,10 @@ public class SecondaryController implements Initializable {
 		return tag.toString();
 
 	}
-
+	/**
+	 * <p>Adds the Display tag.
+	 * </p>
+	 */
 	private String addDisplay() {
 		// One Parameter: DisplayName
 		StringBuilder tag = new StringBuilder();
@@ -202,7 +248,10 @@ public class SecondaryController implements Initializable {
 		return tag.toString();
 
 	}
-
+	/**
+	 * <p>Adds the Music tag.
+	 * </p>
+	 */
 	private String addMusic() {
 		// One Parameter: MusicName
 		StringBuilder tag = new StringBuilder();
@@ -210,7 +259,10 @@ public class SecondaryController implements Initializable {
 		return tag.toString();
 
 	}
-
+	/**
+	 * <p>Adds the Effect tag.
+	 * </p>
+	 */
 	private String addEffect() {
 		// One Parameter: EffectName
 		StringBuilder tag = new StringBuilder();
@@ -218,7 +270,10 @@ public class SecondaryController implements Initializable {
 		return tag.toString();
 
 	}
-
+	/**
+	 * <p>Adds the Background tag.
+	 * </p>
+	 */
 	private String addBackground() {
 		// One Parameter: BGName
 		StringBuilder tag = new StringBuilder();
@@ -226,7 +281,10 @@ public class SecondaryController implements Initializable {
 		return tag.toString();
 
 	}
-
+	/**
+	 * <p>Adds the Animation tag.
+	 * </p>
+	 */
 	private String addAnimation() {
 		// Three Parameters: AnimNumber, AnimName, AnimArgument
 		StringBuilder tag = new StringBuilder();
@@ -241,7 +299,10 @@ public class SecondaryController implements Initializable {
 		return tag.toString();
 
 	}
-
+	/**
+	 * <p>Adds the Mood tag.
+	 * </p>
+	 */
 	private String addMood() {
 		// Two Parameters: MoodNumber, MoodName
 		StringBuilder tag = new StringBuilder();
@@ -253,7 +314,10 @@ public class SecondaryController implements Initializable {
 		return tag.toString();
 
 	}
-
+	/**
+	 * <p>Adds the Character tag.
+	 * </p>
+	 */
 	private String addCharacter() {
 		// Two Parameters: CharaNumber, CharaName
 		StringBuilder tag = new StringBuilder();
@@ -265,7 +329,11 @@ public class SecondaryController implements Initializable {
 		return tag.toString();
 
 	}
-
+	/**
+	 * <p>Changes the view to the MainController.
+	 * </p>
+	 * @param e Used by the Controller.
+	 */
 	public void changeView(ActionEvent e) {
 		try {
 			/* Loads the secondary FXML Scene */

@@ -1,3 +1,5 @@
+
+
 package Controllers;
 
 import org.fxmisc.richtext.StyleClassedTextArea;
@@ -8,11 +10,18 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-
+/**
+ * @author Matthew Lombardo
+ */
 public class Main extends Application {
 
 	static Stage primaryStage;
 
+	/**
+	 * <p>Starts the program.
+	 * </p>
+	 * @param primaryStage The primary stage opened by the program.
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {

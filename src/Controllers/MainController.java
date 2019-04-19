@@ -33,14 +33,24 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
+/**
+ * @author Matthew Lombardo
+ */
 public class MainController implements Initializable {
+
+	/**
+	 * Stores the value of the text inside of the input field. When MainController is re-run, oldInput is the text of the input field.
+	 */
 	static String oldInput;
+	/**
+	 * Stores the current title value. If title is not empty, the program handles loading/saving differently.
+	 */
 	static String titleName;
+	/**
+	 * Stores the current placement of the caret. This is used to put a tag on the current line.
+	 */
 	static int caretValue;
 
-//	@FXML
-//	private TextArea inputField;
 	@FXML
 	private Button getDataButton;
 	@FXML
@@ -50,7 +60,12 @@ public class MainController implements Initializable {
 	@FXML
 	private StyleClassedTextArea richTextFX;
 
-
+	/**
+	 * <p>This method is run as soon as MainController is loaded by the Main class.
+	 * </p>
+	 * @param arg0 Used by the Controller.
+	 * @param arg1 Used by the Controller.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		richTextFX.replaceText(oldInput);
@@ -58,22 +73,40 @@ public class MainController implements Initializable {
 		menuSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		menuLoad.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
 	}
-
+	/**
+	 * <p>Closes the program.
+	 * </p>
+	 * @param e Used by the Controller.
+	 */
 	public void closeProgram(ActionEvent e) {
 		Platform.exit();
 		System.exit(0);
 	}
 
+	/**
+	 * <p>Shows the credits of the program.
+	 * </p>
+	 * @param e Used by the Controller.
+	 */
 	public void showAbout(ActionEvent e) {
 		Alert alert = new Alert(AlertType.INFORMATION, "Credits:\nProgram written by Matthew Lombardo. \nXML Syntax designed by Eleo Espinosa.", ButtonType.OK);
 		alert.showAndWait();
 	}
 
+	/**
+	 * <p>Clears the input field's text.
+	 * </p>
+	 * @param e Used by the Controller.
+	 */
 	public void getData(ActionEvent e) {
 		System.out.println("Get Data button clicked.");
 		richTextFX.clear();
 	}
-
+	/**
+	 * <p>Opens a File Chooser and allows the user to open a .xml file, which is then parsed to plain text for use in the editor.
+	 * </p>
+	 * @param e Used by the Controller.
+	 */
 	public void loadXML(ActionEvent e) {
 		FileChooser fileChooser = new FileChooser();
 
@@ -144,7 +177,12 @@ public class MainController implements Initializable {
             richTextFX.replaceText(finalText.toString());
         }
 	}
-
+	/**
+	 * <p>Reads a file and returns it as a plain text string.
+	 * </p>
+	 * @param file The given file.
+	 * @return the file in plain text.
+	 */
 	private String getTextFromFile(File file) {
 
 	    String content = null;
@@ -170,6 +208,11 @@ public class MainController implements Initializable {
 	    return content;
 	}
 
+	/**
+	 * <p>Saves the plain text in .xml format.
+	 * </p>
+	 * @param e Used by the Controller.
+	 */
 	public void saveXML(ActionEvent e) {
 		// Get String
 		StringBuilder input = new StringBuilder();
@@ -239,13 +282,6 @@ public class MainController implements Initializable {
 			}
 			// If the line has a |endTitle tag, increment i by 1, then finish the XML node.
 		}
-//		XMLBuilder.append("	<node>\n");
-//		XMLBuilder.append("		<title>" + titleName + "</title>\n");
-//		XMLBuilder.append("		<tags></tags>\n");
-//		XMLBuilder.append("		<body id=''>" + input.toString() + "</body>\n");
-//		XMLBuilder.append("		<position x=\"310\" y=\"153\"></position>\n");
-//		XMLBuilder.append("		<colorID>0</colorID>\n");
-//		XMLBuilder.append("	</node>\n");
 
 
 		// Pick save location
@@ -263,7 +299,13 @@ public class MainController implements Initializable {
             saveTextToFile(XMLBuilder.toString(), file);
         }
 	}
-
+	/**
+	 * <p>Saves a string of text to a file.
+	 * </p>
+	 *
+	 * @param content The string that is to be stored as a file.
+	 * @param file The chosen file that the content will be saved to.
+	 */
 	private void saveTextToFile(String content, File file) {
         try {
             PrintWriter writer;
@@ -274,7 +316,11 @@ public class MainController implements Initializable {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+	/**
+	 * <p>Changes the view to the SecondaryController.
+	 * </p>
+	 * @param e Used by the Controller.
+	 */
 	public void changeView(ActionEvent e) {
 		oldInput = richTextFX.getText();
 		try {
