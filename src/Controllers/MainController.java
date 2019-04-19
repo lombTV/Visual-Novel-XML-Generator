@@ -94,7 +94,8 @@ public class MainController implements Initializable {
 			input = new StringBuilder();
 			for (int i = 0; i < lines.length; i++) {
 				if (i > 0) {
-					input.append(lines[i] + "\\n\n");
+					input.append(lines[i]);
+					if (i < lines.length) input.append("\\n\n");
 				}
 			}
 		} else {

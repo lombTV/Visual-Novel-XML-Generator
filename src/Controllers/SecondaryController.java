@@ -93,7 +93,10 @@ public class SecondaryController implements Initializable {
 					case "options": finalText.append(addOptions()); break;
 					case "void": finalText.append(addVoid()); break;
 					case "end": finalText.append(addEnd()); break;
-					case "title": finalText.append(addTitle(finalText)); break;
+					case "title":
+						finalText.append(addTitle(finalText) + "\n");
+						finalText.append("|endTitle:" + parameters[0]);
+						break;
 					case "goto": finalText.append(addGoto()); break;
 				}
 			}
@@ -113,12 +116,12 @@ public class SecondaryController implements Initializable {
 				case "options": finalText.append(addOptions()); break;
 				case "void": finalText.append(addVoid()); break;
 				case "end": finalText.append(addEnd()); break;
-				case "title": finalText.append(addTitle(finalText)); break;
 				case "goto": finalText.append(addGoto()); break;
 			}
 		}
 		
-		if (active == "title") {
+		if (active == "title" && MainController.caretValue >= lines.length) {
+			finalText.append(addTitle(finalText) + "\n");
 			finalText.append("|endTitle:" + parameters[0]);
 		}
 
