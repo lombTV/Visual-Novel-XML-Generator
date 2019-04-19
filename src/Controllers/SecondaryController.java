@@ -29,7 +29,7 @@ public class SecondaryController implements Initializable {
 	private Button changeViewButton, addTagButton;
 	@FXML
 	private RadioButton radioCharacter, radioMood, radioAnimation, radioBackground, radioEffect,
-	radioMusic, radioDisplay, radioOptions, radioVoid, radioEnd, radioTitle;
+	radioMusic, radioDisplay, radioOptions, radioVoid, radioEnd, radioTitle, radioGoto;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -45,6 +45,8 @@ public class SecondaryController implements Initializable {
 		radioVoid.setOnAction(e -> setActive("void"));
 		radioEnd.setOnAction(e -> setActive("end"));
 		radioTitle.setOnAction(e -> setActive("title"));
+		radioGoto.setOnAction(e -> setActive("goto"));
+
 	}
 
 	private void setActive(String i) {
@@ -63,6 +65,8 @@ public class SecondaryController implements Initializable {
 		case "void": outputArea.setPromptText("Parameters: None."); break;
 		case "end": outputArea.setPromptText("Parameters: None."); break;
 		case "title": outputArea.setPromptText("Parameters: TitleName."); break;
+		case "goto": outputArea.setPromptText("Parameters: LayoutName."); break;
+
 		}
 	}
 
@@ -90,6 +94,7 @@ public class SecondaryController implements Initializable {
 					case "void": finalText.append(addVoid()); break;
 					case "end": finalText.append(addEnd()); break;
 					case "title": finalText.append(addTitle(finalText)); break;
+					case "goto": finalText.append(addGoto()); break;
 				}
 			}
 			finalText.append("\n");
@@ -109,6 +114,7 @@ public class SecondaryController implements Initializable {
 				case "void": finalText.append(addVoid()); break;
 				case "end": finalText.append(addEnd()); break;
 				case "title": finalText.append(addTitle(finalText)); break;
+				case "goto": finalText.append(addGoto()); break;
 			}
 		}
 
@@ -119,6 +125,13 @@ public class SecondaryController implements Initializable {
 		changeView(e);
 	}
 
+
+	private String addGoto() {
+		// One Parameter: DisplayName
+		StringBuilder tag = new StringBuilder();
+		tag.append("|GoTo:" + parameters[0]);
+		return tag.toString();
+	}
 
 	private String addTitle(StringBuilder finalText) {
 		// One Parameter: DisplayName

@@ -33,6 +33,11 @@
                   <ToggleGroup fx:id="Tag1" />
                </toggleGroup>
             </RadioButton>
+            <RadioButton fx:id="radioGoto" mnemonicParsing="false" text="GoTo">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Tag11" />
+               </toggleGroup>
+            </RadioButton>
          </children>
          <opaqueInsets>
             <Insets />
