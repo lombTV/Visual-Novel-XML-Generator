@@ -30,6 +30,7 @@
             <RadioButton fx:id="radioEnd" mnemonicParsing="false" text="End" toggleGroup="$Tag" />
             <RadioButton fx:id="radioTitle" mnemonicParsing="false" text="Title" toggleGroup="$Tag" />
             <RadioButton fx:id="radioGoto" mnemonicParsing="false" text="GoTo" toggleGroup="$Tag" />
+            <RadioButton fx:id="radioExtra" mnemonicParsing="false" text="Extra" toggleGroup="$Tag" />
          </children>
          <opaqueInsets>
             <Insets />

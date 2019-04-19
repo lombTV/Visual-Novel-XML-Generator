@@ -29,7 +29,7 @@ public class SecondaryController implements Initializable {
 	private Button changeViewButton, addTagButton;
 	@FXML
 	private RadioButton radioCharacter, radioMood, radioAnimation, radioBackground, radioEffect,
-	radioMusic, radioDisplay, radioOptions, radioVoid, radioEnd, radioTitle, radioGoto;
+	radioMusic, radioDisplay, radioOptions, radioVoid, radioEnd, radioTitle, radioGoto, radioExtra;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -46,7 +46,7 @@ public class SecondaryController implements Initializable {
 		radioEnd.setOnAction(e -> setActive("end"));
 		radioTitle.setOnAction(e -> setActive("title"));
 		radioGoto.setOnAction(e -> setActive("goto"));
-
+		radioExtra.setOnAction(e -> setActive("extra"));
 	}
 
 	private void setActive(String i) {
@@ -66,6 +66,7 @@ public class SecondaryController implements Initializable {
 		case "end": outputArea.setPromptText("Parameters: None."); break;
 		case "title": outputArea.setPromptText("Parameters: TitleName."); break;
 		case "goto": outputArea.setPromptText("Parameters: LayoutName."); break;
+		case "extra": outputArea.setPromptText("Parameters: ExtraName."); break;
 
 		}
 	}
@@ -98,6 +99,7 @@ public class SecondaryController implements Initializable {
 						finalText.append("|endTitle:" + parameters[0]);
 						break;
 					case "goto": finalText.append(addGoto()); break;
+					case "extra": finalText.append(addExtra()); break;
 				}
 			}
 			finalText.append("\n");
@@ -117,9 +119,10 @@ public class SecondaryController implements Initializable {
 				case "void": finalText.append(addVoid()); break;
 				case "end": finalText.append(addEnd()); break;
 				case "goto": finalText.append(addGoto()); break;
+				case "extra": finalText.append(addExtra()); break;
 			}
 		}
-		
+
 		if (active == "title" && MainController.caretValue >= lines.length) {
 			finalText.append(addTitle(finalText) + "\n");
 			finalText.append("|endTitle:" + parameters[0]);
@@ -132,6 +135,13 @@ public class SecondaryController implements Initializable {
 		changeView(e);
 	}
 
+
+	private String addExtra() {
+		// One Parameter: ExtraName
+		StringBuilder tag = new StringBuilder();
+		tag.append("|extra:" + parameters[0]);
+		return tag.toString();
+	}
 
 	private String addGoto() {
 		// One Parameter: DisplayName

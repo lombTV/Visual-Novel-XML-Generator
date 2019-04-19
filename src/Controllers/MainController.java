@@ -57,7 +57,6 @@ public class MainController implements Initializable {
 		System.out.println("Controller Initialized...");
 		menuSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		menuLoad.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
-		menuClose.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
 	}
 
 	public void closeProgram(ActionEvent e) {
