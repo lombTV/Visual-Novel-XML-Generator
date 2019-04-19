@@ -1,6 +1,8 @@
 package Controllers;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -44,7 +46,7 @@ public class MainController implements Initializable {
 	@FXML
 	private Button changeViewButton;
 	@FXML
-	private MenuItem menuSave, menuClose, menuAbout;
+	private MenuItem menuLoad, menuSave, menuClose, menuAbout;
 	@FXML
 	private StyleClassedTextArea richTextFX;
 
@@ -54,6 +56,7 @@ public class MainController implements Initializable {
 		richTextFX.replaceText(oldInput);
 		System.out.println("Controller Initialized...");
 		menuSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+		menuLoad.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
 		menuClose.setAccelerator(new KeyCodeCombination(KeyCode.ESCAPE));
 	}
 
@@ -70,6 +73,102 @@ public class MainController implements Initializable {
 	public void getData(ActionEvent e) {
 		System.out.println("Get Data button clicked.");
 		richTextFX.clear();
+	}
+
+	public void loadXML(ActionEvent e) {
+		FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+		fileChooser.setTitle("Open XML File");
+		File file = fileChooser.showOpenDialog(Main.primaryStage);
+
+        if (file != null) {
+            String text = getTextFromFile(file);
+
+            // Loop through and remove XML tags and new line symbols
+            String[] lines = text.split("\\n");
+            StringBuilder finalText = new StringBuilder();
+            String theTitle = "";
+            for (int i = 0; i < lines.length; i++) {
+            	if (lines[i].contains("<node>")) {
+            		continue;
+            	}
+
+            	if (lines[i].contains("<title>")) {
+            		String title = lines[i];
+            		title = title.replace("		<title>", "");
+            		title = title.replace("</title>", "");
+            		theTitle = title;
+            		finalText.append("|title:" + title + "\n");
+            		titleName = title;
+            		continue;
+            	}
+
+
+            	if (lines[i].contains("<body")) {
+            		// get everything after the body tag
+            		lines[i] = lines[i].replace("<body id=''>", "");
+            		lines[i] = lines[i].replace("	", "");
+            		lines[i] = lines[i].replace("\\n", "");
+            		finalText.append(lines[i] + "\n");
+            		continue;
+            	}
+
+            	if (lines[i].contains("</body")) {
+            		continue;
+            	}
+
+            	if (lines[i].contains("<tags>")) {
+            		continue;
+            	}
+            	if (lines[i].contains("<position")) {
+            		continue;
+            	}
+            	if (lines[i].contains("<colorID>")) {
+            		continue;
+            	}
+            	if (lines[i].contains("</node>")) {
+            		String title = lines[i];
+            		if (title.contains("</node>")) {
+            			title = "|endTitle:";
+            		}
+            		finalText.append(title + theTitle + "\n");
+            		continue;
+            	}
+            	lines[i] = lines[i].replace("\\n", "");
+            	if (lines[i].equals("")) continue;
+            	finalText.append(lines[i] + "\n");
+            }
+
+            richTextFX.replaceText(finalText.toString());
+        }
+	}
+
+	private String getTextFromFile(File file) {
+
+	    String content = null;
+	    FileReader reader = null;
+	    try {
+	        reader = new FileReader(file);
+	        char[] chars = new char[(int) file.length()];
+	        reader.read(chars);
+	        content = new String(chars);
+	        reader.close();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } finally {
+	        if(reader != null){
+	            try {
+					reader.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	    }
+	    return content;
 	}
 
 	public void saveXML(ActionEvent e) {
@@ -132,7 +231,12 @@ public class MainController implements Initializable {
 				XMLBuilder.append("		<colorID>0</colorID>\n");
 				XMLBuilder.append("	</node>\n");
 			} else {
-				if (i < parsedLines.length) XMLBuilder.append(parsedLines[i] + "\n");
+				if (i < parsedLines.length) {
+					if (parsedLines[i].equals("\\n")) {
+						continue;
+					}
+					XMLBuilder.append(parsedLines[i] + "\n");
+				}
 			}
 			// If the line has a |endTitle tag, increment i by 1, then finish the XML node.
 		}
