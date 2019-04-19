@@ -28,16 +28,8 @@
             <RadioButton fx:id="radioOptions" mnemonicParsing="false" text="Options" toggleGroup="$Tag" />
             <RadioButton fx:id="radioVoid" mnemonicParsing="false" text="Void      " toggleGroup="$Tag" />
             <RadioButton fx:id="radioEnd" mnemonicParsing="false" text="End" toggleGroup="$Tag" />
-            <RadioButton fx:id="radioTitle" mnemonicParsing="false" text="Title">
-               <toggleGroup>
-                  <ToggleGroup fx:id="Tag1" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="radioGoto" mnemonicParsing="false" text="GoTo">
-               <toggleGroup>
-                  <ToggleGroup fx:id="Tag11" />
-               </toggleGroup>
-            </RadioButton>
+            <RadioButton fx:id="radioTitle" mnemonicParsing="false" text="Title" toggleGroup="$Tag" />
+            <RadioButton fx:id="radioGoto" mnemonicParsing="false" text="GoTo" toggleGroup="$Tag" />
          </children>
          <opaqueInsets>
             <Insets />

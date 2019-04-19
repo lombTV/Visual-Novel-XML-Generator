@@ -117,6 +117,10 @@ public class SecondaryController implements Initializable {
 				case "goto": finalText.append(addGoto()); break;
 			}
 		}
+		
+		if (active == "title") {
+			finalText.append("|endTitle:" + parameters[0]);
+		}
 
 		//	 Append the current line to finalText.
 		//	 If the current line == the caret's paragraph value, go through the switch
@@ -135,10 +139,9 @@ public class SecondaryController implements Initializable {
 
 	private String addTitle(StringBuilder finalText) {
 		// One Parameter: DisplayName
-		finalText.insert(0,  "|title: " + parameters[0] + "\n");
 		MainController.titleName = parameters[0];
 		StringBuilder tag = new StringBuilder();
-		tag.append("|endTitle:" + parameters[0]);
+		tag.append("|title:" + parameters[0]);
 		return tag.toString();
 	}
 

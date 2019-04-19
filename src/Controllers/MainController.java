@@ -86,6 +86,9 @@ public class MainController implements Initializable {
 			p = Pattern.compile("\\|endTitle(.*)");
 			m = p.matcher(input);
 			input = new StringBuilder(m.replaceAll(""));
+			p = Pattern.compile("\\|title(.*)");
+			m = p.matcher(input);
+			input = new StringBuilder(m.replaceAll(""));
 
 			String[] lines = input.toString().split("\\n");
 			input = new StringBuilder();
@@ -111,13 +114,34 @@ public class MainController implements Initializable {
 		System.out.println(input);
 		// Parse it to XML
 		StringBuilder XMLBuilder = new StringBuilder();
-		XMLBuilder.append("	<node>\n");
-		XMLBuilder.append("		<title>" + titleName + "</title>\n");
-		XMLBuilder.append("		<tags></tags>\n");
-		XMLBuilder.append("		<body id=''>" + input.toString() + "</body>\n");
-		XMLBuilder.append("		<position x=\"310\" y=\"153\"></position>\n");
-		XMLBuilder.append("		<colorID>0</colorID>\n");
-		XMLBuilder.append("	</node>\n");
+		String[] originalLines = richTextFX.getText().split("\\n");
+		String[] parsedLines = input.toString().split("\\n");
+		for (int i = 0; i < originalLines.length; i++) {
+			// If the line has a |title tag, increment i by 1, and add the node, title, tags, and body lines.
+			if (originalLines[i].contains("|title")) {
+				titleName = originalLines[i].split(":")[1];
+				XMLBuilder.append("	<node>\n");
+				XMLBuilder.append("		<title>" + titleName + "</title>\n");
+				XMLBuilder.append("		<tags></tags>\n");
+				XMLBuilder.append("		<body id=''>");
+				XMLBuilder.append(parsedLines[i] + "\n");
+			} else if (originalLines[i].contains("|endTitle")) {
+				XMLBuilder.append("</body>\n");
+				XMLBuilder.append("		<position x=\"0\" y=\"0\"></position>\n");
+				XMLBuilder.append("		<colorID>0</colorID>\n");
+				XMLBuilder.append("	</node>\n");
+			} else {
+				if (i < parsedLines.length) XMLBuilder.append(parsedLines[i] + "\n");
+			}
+			// If the line has a |endTitle tag, increment i by 1, then finish the XML node.
+		}
+//		XMLBuilder.append("	<node>\n");
+//		XMLBuilder.append("		<title>" + titleName + "</title>\n");
+//		XMLBuilder.append("		<tags></tags>\n");
+//		XMLBuilder.append("		<body id=''>" + input.toString() + "</body>\n");
+//		XMLBuilder.append("		<position x=\"310\" y=\"153\"></position>\n");
+//		XMLBuilder.append("		<colorID>0</colorID>\n");
+//		XMLBuilder.append("	</node>\n");
 
 
 		// Pick save location
